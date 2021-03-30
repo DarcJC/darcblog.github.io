@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Darc&#39;s Blog</title>
+  
+  <subtitle>行一次愿，鸣一次钟。我以身作杵，盼你为我而歌。</subtitle>
+  <link href="https://blog.darc.icu/atom.xml" rel="self"/>
+  
+  <link href="https://blog.darc.icu/"/>
+  <updated>2021-03-30T20:39:43.951Z</updated>
+  <id>https://blog.darc.icu/</id>
+  
+  <author>
+    <name>DarcJC</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>『闲谈』 形式语言与正则语言</title>
+    <link href="https://blog.darc.icu/2021/03/31/Formal%20Languages%20vs.%20Regular%20Languages/"/>
+    <id>https://blog.darc.icu/2021/03/31/Formal%20Languages%20vs.%20Regular%20Languages/</id>
+    <published>2021-03-30T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<h1>Formal Languages vs. Regular Languages</h1><p><em>Formal Languages</em> 中文叫做形式语言，而 <em>Regular Languages</em> 叫做正则语言。而这两个概念单靠其中文名来理解，是容易让人迷惑的，也就是不能顾名思义了。</p><hr><p>首先，这两者都需要给出一个<strong>字母表</strong>（英文：alphabet）$\sum$，也就是包含所有可能出现的字符的集合。字母表是由非空符号或字型组成的<strong>有限集合</strong>，也就是语言中出现的符号、字母（英文：letter，也就是单个字<sup>1</sup>）以及其它词元的集合。照习惯称这个集合为字母表，但是可能叫做字符表或是词汇表会更好一些。注意字母表是一个有限集合（英文：finite set）。</p><p>在这里再给出一些记号（notation）以及定义（definition）。</p><p>字母表所构成的所有单词（words）的集合记作$\sum^{*}$，可以读作字母表的<strong>闭包</strong>（名字怪怪的不是嘛，见下文）。将语言$A$记作$L(A)$，读作语言$$A$$。我们将空字符串记作$\epsilon = {“”}$<sup>2</sup>，读作epsilon，在非确定有限自动机（NFA）中起到了重要作用。</p><p>单词（word）是字母表中元素组成的的<strong>有限序列</strong>（要注意这里称之为序列而不是集合）。比如语言$X={0,1}$中，$0$、$011$、$1111$等称为语言$X$的中单词。</p><p>而上面提到的闭包（英文：Kleene closure，克林闭包）笼统的定义就是<strong>由零个、一个或多个（就是任意个）字母表中的元素互相连接所组成的集合</strong>，记作$A^<em>=\cup_{i\ge 0}A^i$。这里的闭包应与</em>计算机科学（英文：computer science）*中的捕获自由变量的函数区分开来，两者没有什么联系。这里之所以叫做闭包，是因为在这个集合（也就是闭包运算所产生的字符串集合）上定义的运算（并、闭包运算，并运算也被称为连接运算）的运算结果也在这个集合中，也就说满足了封闭性（是不是想起了群公理）。这里给出语言$$A$$的闭包的更简单的定义：</p><p>$$A^*=\epsilon|A|AA|AAA|…$$</p><hr><p>现在回归正题。</p><p>基于字母表$\sum$，所谓<em>形式语言</em>，就是由该字母表上单词（word）组成的集合。也有一个等价的定义——字母表$\sum$上的形式语言是字母表闭包$\sum^{*}$的一个子集（英文：subset）。</p><p>而<em>正则语言（regular language/rational language，也称为正规语言）</em>，是一种可以被<em>正则表达式（英文：regular expression）<em>所定义的</em>形式语言</em>，所以<em>正则语言</em>相当于<em>形式语言</em>的一类子集。</p><p>顺便，上面的提到的<em>正则表达式</em>由$\epsilon$、$\sigma\in \sum$、$(r_1)^*$、$(r_1+r_2)$、$(r_1 r_2)$（当且仅当$r_1$、$r_2$为正则表达式）组成。其中$\sigma\in\sum$就是每一个字母表中的元素，而最后三个则是正则表达式中定义的三种运算：</p><ol><li><p>闭包、迭代</p><p>上文已介绍。</p><p>$$A^*=\cup_{i\ge 0}A^i$$</p></li><li><p>串接、连接</p><p>注意这个操作是分前后的。</p><p>$AB={ab|a\in A\ and\ b\in B}$</p></li><li><p>并</p><p>也就是集合中的并集</p><p>$$A+B={s|s\in A\ or\ s\in B }$$</p></li></ol><p>这三种运算的运算优先级由高到低排列，也就是说闭包的优先级最高，并的优先级最低。</p><hr><p>注：</p><ol><li>语言学中的<em>字</em>是语意的基本单位，即语素；一个字可以拥有多个字形。</li><li>有时也被记作$\lambda$。</li></ol><p>参考资料：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[1] Wikipedia contributors. (2021, January 3). Regular language. In *Wikipedia, The Free Encyclopedia*. Retrieved 17:50, March 30, 2021, from https:&#x2F;&#x2F;en.wikipedia.org&#x2F;w&#x2F;index.php?title&#x3D;Regular_language&amp;oldid&#x3D;998010276</span><br><span class="line"></span><br><span class="line">[2] Wikipedia contributors. (2021, March 28). Formal language. In Wikipedia, The Free Encyclopedia. Retrieved 17:53, March 30, 2021, from https:&#x2F;&#x2F;en.wikipedia.org&#x2F;w&#x2F;index.php?title&#x3D;Formal_language&amp;oldid&#x3D;1014601092</span><br><span class="line"></span><br><span class="line">[3] Hopcroft, J. E., &amp; Ullman, J. D. (1979). Introduction to Automata Theory, Languages and Computation (Addison-Wesley series in computer science) (1st ed.). Addison-Wesley Publishing Company.</span><br><span class="line"></span><br><span class="line">[4] Formal language - Encyclopedia of Mathematics. (2019). Encyclopedia of Mathematics. https:&#x2F;&#x2F;encyclopediaofmath.org&#x2F;index.php?title&#x3D;Formal_language</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;Formal Languages vs. Regular Languages&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Formal Languages&lt;/em&gt; 中文叫做形式语言，而 &lt;em&gt;Regular Languages&lt;/em&gt; 叫做正则语言。而这两个概念单靠其中文名来理解，是容</summary>
+      
+    
+    
+    
+    <category term="cs143-notes" scheme="https://blog.darc.icu/categories/cs143-notes/"/>
+    
+    
+    <category term="note, cs143" scheme="https://blog.darc.icu/tags/note-cs143/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS143 Lecture04 Implementation of Lexical Analysis，Note</title>
+    <link href="https://blog.darc.icu/2021/03/26/CS143%20Lecture04%20Implementation%20of%20Lexical%20Analysis/"/>
+    <id>https://blog.darc.icu/2021/03/26/CS143%20Lecture04%20Implementation%20of%20Lexical%20Analysis/</id>
+    <published>2021-03-25T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<h1>CS143 Lecture04 Implementation of Lexical Analysis</h1><p><strong>Implementation of regular expressions:</strong></p><p>$$RegExp ⇒ NFA ⇒ DFA ⇒ Tables$$</p><p><strong>Notation</strong></p><ul><li>Union: $$A|B\equiv A+B$$</li><li>Option: $$A+\epsilon\equiv A? $$</li><li>Range: $$‘a’+‘b’+…‘z’\equiv [a-z]$$</li><li>Excluded range: $$complement\ of\ [a-z]\equiv [\hat{} a ]$$</li></ul><h2 id="Regular-Expressions-Lexical-Spec-1">Regular Expressions =&gt; Lexical Spec. (1)</h2><ol><li><p>Write a regex for each token</p></li><li><p>Construct R, matching all lexemes for all tokens<br>$$<br>R = Keyword + Identifier + Number + …\<br>= R1+ R2+ …<br>$$<br>(This step is done automatically by tools like <em>Flex</em>)</p></li><li><p>Let input be $$x_1…x_n$$ (iterate chars in input)</p><p>For $$i \le i \le n$$ check<br>$$<br>x_1…x_i \in L®<br>$$</p></li><li><p>If success, then we know that</p><p>$$x_1…x_i \in L(R_j)$$ for some $$j$$</p></li><li><p>Remove $$x_1…x_i$$ from input and goto (3)</p></li></ol><h3 id="Ambiguities-1">Ambiguities (1)</h3><p>当<br>$$<br>x_1…x_i\in L®\<br>x_i…x_k\in L®<br>$$<br>上述两式同时成立时，换句话说，也就是多个起点相同，长度不同的子串同时满足语言$$L®$$时，</p><p>**Rule: ** Pick longest possible string in $$L®$$</p><p>也就是说取满足$$L®$$的最长子串。</p><h3 id="Ambiguities-2">Ambiguities (2)</h3><p>当相同子串满足多个正则语言定义时，即<br>$$<br>x_1…X_i\in L(R_j)\<br>x_i…x_i\in L(R_k)<br>$$<br>这种给个优先级就好惹。</p><h3 id="Error-Handling">Error Handling</h3><p>考虑如果一段输入的前缀无法被任何规则匹配的情况，我们会一直匹配直到输入终结处（EOF）。我们可以尝试编写一个匹配所有<em>坏字符串</em>的规则，并将其优先级设为最低。</p><h3 id="Summary">Summary</h3><p>Regular expressions provide a concise notation for string patterns.</p><p>Use in lexical analysis requires small extensions</p><ul><li>To resolve ambiguities</li><li>To handle errors</li></ul><p>Good algorithms known</p><ul><li>Require only single pass over the input</li><li>Few operations per character (table lookup)</li></ul><h2 id="Finite-Automata">Finite Automata</h2><p><strong>A finite automaton consists of</strong></p><ul><li>An input alphabet $$\sum$$</li><li>A set of states $$S$$</li><li>A start state $$n$$</li><li>A set of accepting states $$F \subseteq S$$</li><li>A set of transitions $$state \rightarrow^{input} state$$</li></ul><h3 id="Transitions">Transitions</h3><p>中文也就是状态转换。可以记作<br>$$<br>s_1 \rightarrow^{a} s_2<br>$$<br>可以读作<em>输入$$a$$使状态$$s_1$$转移到状态$$s_2$$</em>。</p><p>如果在输入结束时不处于接受状态(accept)，则拒绝(reject)该输入。</p><p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326184435.png" alt="有穷状态机状态图示"></p><h3 id="Epsilon-Moves">Epsilon Moves</h3><p>This is a way to change a state to another without any input. 不过我真没找到这玩意的中文翻译，所以以下叫做<em>ε-moves</em>（大草</p><p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326185231.png" alt="ε-moves"></p><p>Only exist in NFAs.</p><h3 id="Deterministic-and-Nondeterministic-Automata">Deterministic and Nondeterministic Automata</h3><ul><li><p>Deterministic Finite Automaton</p><p>每个输入都有确定的一个状态转移。</p><p>没有<em>ε-moves</em>。</p></li><li><p>Nondeterministic Finite Automata</p><p>对于每个输入，状态转移的个数不确定。可以是零、一或多个状态转移。</p><p>可以含有<em>ε-moves</em>。</p></li></ul><p>所以，对于DFA来说，整个状态转移路径可以使用一个给定的输入确定。NFA则可以选择多种状态转移路径或是进行<em>ε-moves</em>。</p><p>因此我们规定：一个$$NFA$$如果可以达到一个<em>最终状态</em>，那么它是接受的（accept）。</p><h3 id="NFA-vs-DFA">$$NFA$$ vs. $$DFA$$</h3><ul><li>$$DFA$$通常比$$NFA$$快</li><li>$$DFA$$通常比$$NFA$$复杂（甚至可以达到指数级的）</li></ul><p>对于$$NFA$$，它的状态数是可能状态数$$N$$的非空子集。也就是说，有$$2^N-1$$个可能状态数。</p><h3 id="Convert-Regular-Expression-to-Finite-Automata">Convert Regular Expression to Finite Automata</h3><p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326191908.png" alt=""></p><p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326192218.png" alt=""></p><p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326192236.png" alt=""></p><p><strong>技巧</strong></p><p>我们可以对$$NFA$$进行模拟。且目标$$DFA$$的每个状态都是一个$$NFA$$状态的非空子集。</p><p>目标$$DFA$$起始状态是一组从$$NFA$$的起始状态可以通过<em>ε-moves</em>转移到的状态。</p><p>而对于其它转换规则，我们遵从——如果状态$$S^<code>$$在遇到输入$$a$$时，可以从原状态$$S$$达到（包括*ε-moves*），那么我们将$$S \rightarrow^&#123;a&#125; S^</code>$$放进$$DFA$$的转换规则列表中。</p><h3 id="实现">实现</h3><p>$$DFA$$可以通过一个二维数组$$T$$实现，我们将$$S_i\rightarrow^{a}S_k$$映射为$$T[i,a]=k$$。所以，$$T$$的一个维度代表状态，而另一个维度代表输入，其值代表目标状态。</p><p><strong>执行</strong>$$DFA$$</p><p>如果当前状态为$$S_k$$，在读取输入$$a$$后，查表转移到状态$$S_i=T[k,a]$$。</p><p><strong>结论</strong></p><p>将$$NFA$$转换到$$DFA$$是很多像$$Flex$$这种工具的核心。但是因为$$DFA$$可能会有着极其巨大的状态数，所以，实践中通常会牺牲时间来换取空间。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;CS143 Lecture04 Implementation of Lexical Analysis&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Implementation of regular expressions:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;$$RegExp ⇒ NFA</summary>
+      
+    
+    
+    
+    <category term="cs143-notes" scheme="https://blog.darc.icu/categories/cs143-notes/"/>
+    
+    
+    <category term="note, cs143" scheme="https://blog.darc.icu/tags/note-cs143/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS143 Lecture03 Lexical Analysis，Note</title>
+    <link href="https://blog.darc.icu/2021/03/25/CS143%20Lecture03%20Lexical%20Analysis/"/>
+    <id>https://blog.darc.icu/2021/03/25/CS143%20Lecture03%20Lexical%20Analysis/</id>
+    <published>2021-03-24T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<h1>CS143 Lecture03: Lexical Analysis</h1><p><em>词法分析</em>。</p><p><strong>Goal</strong>: Partition input string into substring called <em>tokens</em></p><p>Lexical analysis produces a stream of tokens, which is input to the parser.</p><p>这是编译的第1/4步，词法分析产生词元序列并作为下一阶段(parse，翻译)的输入。</p><h2 id="Token">Token</h2><p><em>词元</em>。</p><p>A syntactic category，也就是对句法的分类</p><blockquote><p>In English:</p><ul><li>noun, verb, adjective, …</li></ul><p>In a programming language:</p><ul><li>Identifier, Integer, Keyword, Whitespace, …</li></ul></blockquote><p>A token class corresponds to a set of strings.</p><p>Examples</p><ul><li>Identifier: strings of letters or digits, starting with a letter</li><li>Integer: a non-empty string of digits</li><li>Keyword: “else” or  “if” or  “begin” or …</li><li>Whitespace: a non-empty sequence of blanks,  newlines, and tabs</li></ul><h2 id="Design">Design</h2><p>噢对，这有个缩写<em>N.B.</em>，原版是<em>Nota Bene</em>（拉丁语），也就是划重点的意思。另外<em>lexeme</em>中文翻译为<em>词素</em>。</p><ul><li>Define a finite set of tokens.</li><li>Describe which strings belong to each token.</li></ul><p>但是我们应该考虑到歧义。如下例子：</p><p><code>i</code>/<code>if</code>；<code>=</code>/<code>==</code>；<code>Foo&lt;Bar&gt;</code>/<code>cin &gt;&gt; var;</code>/<code>Foo&lt;Bar&lt;Bazz&gt;&gt;</code>；</p><p>而要消除歧义显然就没办法在线处理了——我们需要“Lookahead”。</p><p>现在我们需要的，是描述词元的词素并找到一种消除歧义的方法。</p><h2 id="Regular-Languages">Regular Languages</h2><p>中文叫做<em>正则语言</em>或是<em>正规语言</em>。正则语言是描述词元的最常用的形式。</p><p><strong>Language Def. :</strong>  Let S be a set of characters. <em>A language over S</em> is a set of strings of characters drawn  from S.</p><p>定义指出，字符串S上的<em>语言</em>就是一组S上的<em>子串</em>。$$L(x)$$表示“<em>x的语言</em>”。</p><p>所以，</p><hr><ul><li>语言是一组字符串。</li><li>需要一些记号来指定词法分析器所需的字符串组。</li><li>正则语言使用的标准记号叫做正则表达式。</li></ul><h3 id="Atomic-Regular-Expression">Atomic Regular Expression</h3><ul><li><p>Single character</p><p>$$‘c’={“c”}$$</p></li><li><p>Epsilon</p><p>$$\epsilon = {“”}$$</p></li></ul><h3 id="Compound-Regular-Expression">Compound Regular Expression</h3><ul><li><p>Union 并</p><p>$$A+B={s|s \in A \ \ or\ \  s\in B}$$</p><p>也就是对$$A$$和$$B$$所表示的语言取并集。</p></li><li><p>Concatenation 串接</p><p>$$AB={ab|a\in A\ \  and\ \  b \in B}$$</p></li><li><p>Iteration 克林闭包</p><p>$$A^*=\cup_{i\ge 0}A^i$$ where $$A^i=A…i \ \ times\ \ …A$$</p><p>表示$$A$$中的字符串没有出现或是多次出现。</p><p>注意以上运算的优先级是$$闭包(最高)-串接-并(最低)$$。</p></li></ul><p><strong>Regular Expression Def. :</strong> The <em>regular expressions</em> over S are the smallest set of expressions including</p><ul><li>$$\epsilon$$</li><li>$$‘c’$$ where $$c\in \sum$$</li><li>$$A+B$$ where $$A,B$$ are regex over $$\sum$$</li><li>$$AB$$</li><li>$$A^*$$ where $$A$$ is regex over $$\sum$$</li></ul><h3 id="Syntax-vs-Semantics">Syntax vs. Semantics</h3><blockquote><p>To be careful, we should distinguish syntax and semantics.</p></blockquote><p>$$L(\epsilon) = {“”}$$</p><p>$$L(‘c’)={“c”}$$</p><p>$$L(A+B)=L(A)\cup L(B)$$</p><p>$$L(AB)={ab|a\in L(A)\ \ and\ \ b \in L(B)}$$</p><p>$$L(A^*)=\cup_{i\ge 0}L(A^i)$$</p><h3 id="Example">Example</h3><p><strong>Keyword</strong></p><p>Keyword: “else” or “if” or “begin” or …</p><p>$$‘else’+‘if’+‘begin’+…$$</p><p>Note: $$‘else’$$ abbreviates $$‘e’\ ‘l’\ ‘s’\ ‘e’$$</p><p><strong>Integer</strong></p><p>In order to describe integers, here is an abbreviation:</p><p>$$A^+=AA^<em>$$<br>$$<br>⇒ digit=‘0’+‘1’+‘2’+‘3’+‘4’+‘5’+‘6’+‘7’+‘8’+‘9’\<br>⇒ integer=digit^+<br>$$<br><strong>Identifier</strong><br>$$<br>letter=‘A’+…+‘Z’+‘a’+…+‘z’\<br>identifier=letter(letter+digit)^</em><br>$$<br><strong>Whitespace</strong><br>$$<br>(‘\ ‘+’\backslash n’ + ‘\backslash t’)<br>$$</p><h2 id="Summary">Summary</h2><ul><li>Regular languages are a language specification<ul><li>We still need an implementation</li></ul></li><li>Given a string s and a rexp R, is<ul><li>$$s \in L®$$ ?</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;CS143 Lecture03: Lexical Analysis&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;词法分析&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Partition input string into substring called &lt;em&gt;</summary>
+      
+    
+    
+    
+    <category term="cs143-notes" scheme="https://blog.darc.icu/categories/cs143-notes/"/>
+    
+    
+    <category term="note, cs143" scheme="https://blog.darc.icu/tags/note-cs143/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS143 Lecture01 Overview，Note</title>
+    <link href="https://blog.darc.icu/2021/03/23/CS143%20Lecture01%20Overview%EF%BC%8CNote/"/>
+    <id>https://blog.darc.icu/2021/03/23/CS143%20Lecture01%20Overview%EF%BC%8CNote/</id>
+    <published>2021-03-22T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<h1>CS143 Leture01: Overview，Note</h1><p><strong>The structure of a compiler</strong></p><ol><li>Lexical Analysis(词法分析)</li><li>Parsing(预处理)</li><li>Semantic Analysis(文法分析)</li><li>Optimization(优化)</li><li>Code Generation(代码生成)</li></ol><h2 id="Lexical-Analysis">Lexical Analysis</h2><ul><li><p>Recognize words.</p><p>word is the smallest unit above letters.</p></li><li><p><em>Lexical Analysis</em> divide a string into “words” or “token”</p></li></ul><h2 id="Parsing">Parsing</h2><p>Parsing = Diagramming Sentences</p><h2 id="Semantic-Analysis">Semantic Analysis</h2><p><strong>To understand the meaning of sentence</strong>, but <em>meaning</em> is too hard to a program.</p><p>Compilers perform limited semantic analysis to catch inconsistencies.</p><h2 id="Optimization">Optimization</h2><p>CS243: Program Analysis and Optimization</p><h2 id="Code-Generation">Code Generation</h2><p>A translation to another language, and typically produce assembly code.</p><p><strong>Intermediate Representations（中间形式，a.k.a. IR）</strong></p><p>Many compilers will perform translations between successive intermediate languages（很多编译器翻译时会使用多个中间形式.）</p><ul><li>All but first and last are intermediate representations (IR) internal（内部的） to the compiler.</li></ul><p>IRs are useful to hide the lower levels feature from higher levels.</p><ul><li>registers</li><li>memory layout</li><li>raw pointers</li><li>…</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;CS143 Leture01: Overview，Note&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;The structure of a compiler&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Lexical Analysis(词法分析)&lt;/li&gt;
+&lt;li&gt;Parsing(</summary>
+      
+    
+    
+    
+    <category term="cs143-notes" scheme="https://blog.darc.icu/categories/cs143-notes/"/>
+    
+    
+    <category term="note, cs143" scheme="https://blog.darc.icu/tags/note-cs143/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS143 Lecture02 Language Design and Instruction of Cool，Note</title>
+    <link href="https://blog.darc.icu/2021/03/23/CS143%20Lecture02%20Language%20Design%20and%20Instruction%20of%20Cool/"/>
+    <id>https://blog.darc.icu/2021/03/23/CS143%20Lecture02%20Language%20Design%20and%20Instruction%20of%20Cool/</id>
+    <published>2021-03-22T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<h1>CS 143 Lecture02: Language Design and Instruction of Cool</h1><p><strong>Topics:</strong></p><ul><li>Why are there new languages?</li><li>Good-language criteria</li></ul><p><strong>History of ideas:</strong></p><ul><li>Abstract(抽象)</li><li>Types(类型)</li><li>Reuse(复用)</li></ul><h2 id="History-of-Ideas">History of Ideas</h2><ul><li><p>Abstract</p><p>Abstraction = Ignorance of some details</p><p>Abstract is necessary to build a complex system, and the key is <strong>information hiding</strong> - only expose the essential</p><p>Modes:</p><ul><li>Via language</li><li>Via function / subroutine (LISP?)</li><li>Via module (ECMAScript)</li><li>Via class or abstract data types (Rust)</li></ul></li><li><p>Types</p><ul><li>Originally, few(no) types</li><li>But types helps on building abstractions / compile time check.</li><li>Experiments with various forms of parameterization(a.k.a. generic types，也就是所谓“泛型”).</li><li>Best developed in functional programming(a.k.a. FP).</li></ul></li><li><p>Reuse</p><p>It’s many common patterns while programming, but they’re hard to reuse.</p><p>Tow popular approaches:</p><ul><li>Type parameterization（泛型，<code>List&lt;int&gt;</code>、<code>List&lt;double&gt;</code>）</li><li>Classes and inheritance</li><li>（Where is Traits? 🤣</li></ul></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;CS 143 Lecture02: Language Design and Instruction of Cool&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Topics:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Why are there new languages?&lt;/li</summary>
+      
+    
+    
+    
+    <category term="cs143-notes" scheme="https://blog.darc.icu/categories/cs143-notes/"/>
+    
+    
+    <category term="note, cs143" scheme="https://blog.darc.icu/tags/note-cs143/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Darc Bot更新记录</title>
+    <link href="https://blog.darc.icu/2021/02/15/darc-qq-bot-changelog/"/>
+    <id>https://blog.darc.icu/2021/02/15/darc-qq-bot-changelog/</id>
+    <published>2021-02-14T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note default">            <p>这只是一个更新记录 xD<br/><br>项目地址: <a href="https://github.com/DarcJC/darc-qq-bot">https://github.com/DarcJC/darc-qq-bot</a></p>          </div><h1>Changelogs</h1><p>…</p><h2 id="2021-2-15">2021/2/15</h2><ul><li>命运2信息查询</li><li>数据库问题临时修复</li></ul><h2 id="2021-2-14">2021/2/14</h2><ul><li>彩六战绩查询</li><li>切换到TypeScript</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;note default&quot;&gt;
+            &lt;p&gt;这只是一个更新记录 xD&lt;br/&gt;&lt;br&gt;项目地址: &lt;a href=&quot;https://github.com/DarcJC/darc-qq-bot&quot;&gt;https://github.com/Darc</summary>
+      
+    
+    
+    
+    <category term="misc-post" scheme="https://blog.darc.icu/categories/misc-post/"/>
+    
+    
+    <category term="misc" scheme="https://blog.darc.icu/tags/misc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Halo, 哈喽</title>
+    <link href="https://blog.darc.icu/2020/12/07/hello-world/"/>
+    <id>https://blog.darc.icu/2020/12/07/hello-world/</id>
+    <published>2020-12-06T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<p>欢迎来到Darc的小博客啦~</p><a id="more"></a><p><em>感谢愿意来看这个博客的你！</em></p><p>这里会，记录一些偶尔的想法或者分享一些奇奇怪怪的东西。<a href="https://darc.pro">原来的博客</a> 已经关闭啦，因为不想续费阿里云（懒。</p><p>其实这个博客前阵子就已经配置好了来着，但是因为之前好多事情要做，而且平时也懒洋洋的，就一直没怎么管这个博客。这次就顺便换了个主题，随便写写叭~</p><p>这个博客是基于 <em>Github Pages</em> 的喔，通过 <em>travis-ci</em> 进行自动构建。</p><h2 id="关于我">关于我</h2><p>啊，是不是该要自我介绍了！</p><p>那，Darc Z.，性别男，CS本科在读。就这样子叭（不是✨</p><p>性格方面，可能经常会因为某些事情莫名其妙难过叭。虽然一直想，我如果是个女孩子该多好吖，但是，男孩子也挺好的，我也会努力让自己变得更好的！</p><p>对未来会有很多的期待吧……但是现在真的是太孤单了啊……虽然都习惯了独来独往了，但是就，特别渴望有人能陪我一起走下去，一直在一起不分开的那种。</p><h3 id="特长">特长</h3><p>特长就是真的没有什么特长啊！！！</p><p>目前常用的技术栈：Python，Rust，C/C++，JavaScript(TypeScript)。（不想用Java！！！！</p><p>或者，打R6S可以喊我，我喊6贼6的！（PlayU ID(小号): WaitMe4ASecond</p><p>==========</p><p>以上。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;欢迎来到Darc的小博客啦~&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="misc-post" scheme="https://blog.darc.icu/categories/misc-post/"/>
+    
+    
+    <category term="misc" scheme="https://blog.darc.icu/tags/misc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>尘尘杂记 | 风</title>
+    <link href="https://blog.darc.icu/2020/12/07/misc-1/"/>
+    <id>https://blog.darc.icu/2020/12/07/misc-1/</id>
+    <published>2020-12-06T16:00:00.000Z</published>
+    <updated>2021-03-30T20:39:43.951Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note default">            <h3 id="摘">摘</h3><p>To dare is to lose one’s footing momentarily. To not dare is to lose oneself. </br>—Soren Kierkegaard</p>          </div><p>唔。</p><p>总是想，人，是不是就是在旦夕之间游走的蜉蝣啊。“朝而往，暮而归”，以此为乐。</p><a id="more"></a><p>又到一个刮着大风的冬天了，这鬼风吹得骑单车的我怀疑人生。嗯，我觉得我适合倒着骑。不过不管怎么说，最近过的，倒不是以前那样僵化的生活了。</p><p>以前嘛，上课、看小说；吃饭、睡觉，一气呵成。好长一段时间，都是这样子的吧。以至于我都以为我习惯了这种生活了。所以，现在再去回想一下从前的我，主要还是<strong>去改变的勇气</strong>吧。曾经的我，会经常下意识地去拒绝（忽略）一些新鲜的、与自己观点相悖的看法。这种情况，经常会被归结为——价值观不同。</p><p>我<strong>主观</strong>上认为，价值观应该是动态的，是在认知这个世界的过程中，修补、完善的。通常，由于对信息（见<sup>1</sup>）的匮乏或是信息来源的单一，我们无法完整的认识这个世界，价值观难免会存在缺漏。所以价值观应该是不断完善的。</p><p>俗话说，“江山易改，本性难移”（出自《醒世恒言》、《谢金吾诈拆清风府》），而价值观作为“本性”的重要组成部分，之所以大家认为难以改变，是因为在人生中，大家都形成了能够部分自洽（consistent，哲学上的，见下）的价值观体系吧。当然，存在矛盾的地方，通常也难以察觉。</p><blockquote><p>一般理解为我的信念集自洽，这里的信念集指的是一个人内心认可的所有陈述的集合，包括一个人相信的世界观、道德观，他学会的知识和产生的想法，乃至于他认知到自己已经、正在和想要做出的行为等等。因此就有其他答主举出的许多例子，比如你眼见不同重量的铁球同时落地的实验，却还口口声声说支持亚里士多德“越重的物体下落越快“，那么你就自相矛盾、不自洽了。当然，你也可以诡辩说，这是因为人的视觉是有误差的，看到是同时，其实是不同时的，这样子把话原回来，相当于就暂时地保证了自己的自洽性，尽管单纯针对这个问题，依现有科学的结论来看，你总会发现更多的反例而将自己更深地陷入矛盾而不自洽的漩涡中。被提及多次的另一个例子，比如你呼吁着“种族歧视的人都该去死“，但是自己却心安理得地歧视着其他的种族，就会因为逻辑上的不自洽而遭受批判。当然，如果一个人不要脸地承认“我就是该死，但是我还想赖着再活几年“，那么你固然还可以批评他道德败坏，但想要说他不自洽、自相矛盾却无从下手、无可奈何了。<br>作者：beanandbean<br>链接：<a href="https://www.zhihu.com/question/305862042/answer/1368030090">https://www.zhihu.com/question/305862042/answer/1368030090</a></p></blockquote><p>出于“对稳定感的渴望”，人本能地对于外界的刺激表现出抗拒<sup>2</sup>。所以很多时候，不再接受与自己价值观相悖的观点并加以审视，我认为这是难以改变的原因之一。</p><p>回到改变这一点上来，有勇气做出改变。并可以像“吾日三省吾身”这样，对自己的动机、感受、欲望、认知等有更真实、更大量的觉察和了解<sup>2</sup>。这可以让我更好的接受外界的信息，并对这个世界有更深入的了解；也让我愿意更加深入地思考，我为什么想要做一件事。</p><p>当然啦，世界是多元的，价值观也不是非黑即白的。多思考，并有勇气去改变，这样就好了吧。我觉得，这样可以让自己变得更好。</p><p>不过，这鬼风真的好鬼冻啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊。</p><h2 id="References">References</h2><p><sup>1</sup>Olimpia Lombardi. (2004). Foundations of Science 9(2):105-134. What is Information?</p><p><sup>2</sup><a href="https://zhuanlan.zhihu.com/p/320451077">“对自己的生活境况不满意，却又迟迟无法做出改变。”｜ 这种重要心理特质，能令我们走出僵化的生活状态。</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;note default&quot;&gt;
+            &lt;h3 id=&quot;摘&quot;&gt;摘&lt;/h3&gt;&lt;p&gt;To dare is to lose one’s footing momentarily. To not dare is to lose oneself. &lt;/br&gt;—Soren Kierkegaard&lt;/p&gt;
+          &lt;/div&gt;
+&lt;p&gt;唔。&lt;/p&gt;
+&lt;p&gt;总是想，人，是不是就是在旦夕之间游走的蜉蝣啊。“朝而往，暮而归”，以此为乐。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="misc-post" scheme="https://blog.darc.icu/categories/misc-post/"/>
+    
+    
+    <category term="misc" scheme="https://blog.darc.icu/tags/misc/"/>
+    
+  </entry>
+  
+</feed>

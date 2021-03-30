@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Darc&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DarcJC">
+  <meta name="keywords" content="Darc,技术,Computer Graphic">
+  <meta name="description" content="Darc的博客">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": false,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'null'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "endless-river",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Darc's Blog" type="application/atom+xml">
+</head>
+<body>
+<div id="page">
+
+<div id="lx-aside" style="background-image: url(/images/cover.jpeg)">
+  <div class="overlay">
+  <div class="featured">
+    <div class="avatar"><a href="/"><img src="/images/avatar.png"></a></div>
+    <span>DarcJC</span>
+    <h1>Darc's Blog</h1>
+    <span>——行一次愿，鸣一次钟。我以身作杵，盼你为我而歌。</span>
+    <div class="social-links">
+    <a href="https://github.com/DarcJC" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+</div>
+  </div>
+  </div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/03/31/Formal%20Languages%20vs.%20Regular%20Languages/">『闲谈』 形式语言与正则语言</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-03-31 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/cs143-notes/">cs143-notes</a></span>
+      <p><h1>Formal Languages vs. Regular Languages</h1>
+<p><em>Formal Languages</em> 中文叫做形式语言，而 <em>Regular Languages</em> 叫做正则语言。而这两个概念单靠其中文名来理解，是容易让人迷惑的，也就是不能顾名思义了。</p>
+<hr>
+<p>首先，这两者都需要给出一个<strong>字母表</strong>（英文：alphabet）$\sum$，也就是包含所有可能出现的字符的集合。字母表是由非空符号或字型组成的<strong>有限集合</strong>，也就是语言中出现的符号、字母（英文：letter，也就是单个字<sup>1</sup>）以及其它词元的集合。照习惯称这个集合为字母表，但是可能叫做字符表或是词汇表会更好一些。注意字母表是一个有限集合（英文：finite set）。</p>
+<p>在这里再给出一些记号（notation）以及定义（definition）。</p>
+<p>字母表所构成的所有单词（words）的集合记作$\sum^{*}$，可以读作字母表的<strong>闭包</strong>（名字怪怪的不是嘛，见下文）。将语言$A$记作$L(A)$，读作语言$$A$$。我们将空字符串记作$\epsilon = {“”}$<sup>2</sup>，读作epsilon，在非确定有限自动机（NFA）中起到了重要作用。</p>
+<p>单词（word）是字母表中元素组成的的<strong>有限序列</strong>（要注意这里称之为序列而不是集合）。比如语言$X={0,1}$中，$0$、$011$、$1111$等称为语言$X$的中单词。</p>
+<p>而上面提到的闭包（英文：Kleene closure，克林闭包）笼统的定义就是<strong>由零个、一个或多个（就是任意个）字母表中的元素互相连接所组成的集合</strong>，记作$A^<em>=\cup_{i\ge 0}A^i$。这里的闭包应与</em>计算机科学（英文：computer science）*中的捕获自由变量的函数区分开来，两者没有什么联系。这里之所以叫做闭包，是因为在这个集合（也就是闭包运算所产生的字符串集合）上定义的运算（并、闭包运算，并运算也被称为连接运算）的运算结果也在这个集合中，也就说满足了封闭性（是不是想起了群公理）。这里给出语言$$A$$的闭包的更简单的定义：</p>
+<p>$$A^*=\epsilon|A|AA|AAA|…$$</p>
+<hr>
+<p>现在回归正题。</p>
+<p>基于字母表$\sum$，所谓<em>形式语言</em>，就是由该字母表上单词（word）组成的集合。也有一个等价的定义——字母表$\sum$上的形式语言是字母表闭包$\sum^{*}$的一个子集（英文：subset）。</p>
+<p>而<em>正则语言（regular language/rational language，也称为正规语言）</em>，是一种可以被<em>正则表达式（英文：regular expression）<em>所定义的</em>形式语言</em>，所以<em>正则语言</em>相当于<em>形式语言</em>的一类子集。</p>
+<p>顺便，上面的提到的<em>正则表达式</em>由$\epsilon$、$\sigma\in \sum$、$(r_1)^*$、$(r_1+r_2)$、$(r_1 r_2)$（当且仅当$r_1$、$r_2$为正则表达式）组成。其中$\sigma\in\sum$就是每一个字母表中的元素，而最后三个则是正则表达式中定义的三种运算：</p>
+<ol>
+<li>
+<p>闭包、迭代</p>
+<p>上文已介绍。</p>
+<p>$$A^*=\cup_{i\ge 0}A^i$$</p>
+</li>
+<li>
+<p>串接、连接</p>
+<p>注意这个操作是分前后的。</p>
+<p>$AB={ab|a\in A\ and\ b\in B}$</p>
+</li>
+<li>
+<p>并</p>
+<p>也就是集合中的并集</p>
+<p>$$A+B={s|s\in A\ or\ s\in B }$$</p>
+</li>
+</ol>
+<p>这三种运算的运算优先级由高到低排列，也就是说闭包的优先级最高，并的优先级最低。</p>
+<hr>
+<p>注：</p>
+<ol>
+<li>语言学中的<em>字</em>是语意的基本单位，即语素；一个字可以拥有多个字形。</li>
+<li>有时也被记作$\lambda$。</li>
+</ol>
+<p>参考资料：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[1] Wikipedia contributors. (2021, January 3). Regular language. In *Wikipedia, The Free Encyclopedia*. Retrieved 17:50, March 30, 2021, from https:&#x2F;&#x2F;en.wikipedia.org&#x2F;w&#x2F;index.php?title&#x3D;Regular_language&amp;oldid&#x3D;998010276</span><br><span class="line"></span><br><span class="line">[2] Wikipedia contributors. (2021, March 28). Formal language. In Wikipedia, The Free Encyclopedia. Retrieved 17:53, March 30, 2021, from https:&#x2F;&#x2F;en.wikipedia.org&#x2F;w&#x2F;index.php?title&#x3D;Formal_language&amp;oldid&#x3D;1014601092</span><br><span class="line"></span><br><span class="line">[3] Hopcroft, J. E., &amp; Ullman, J. D. (1979). Introduction to Automata Theory, Languages and Computation (Addison-Wesley series in computer science) (1st ed.). Addison-Wesley Publishing Company.</span><br><span class="line"></span><br><span class="line">[4] Formal language - Encyclopedia of Mathematics. (2019). Encyclopedia of Mathematics. https:&#x2F;&#x2F;encyclopediaofmath.org&#x2F;index.php?title&#x3D;Formal_language</span><br></pre></td></tr></table></figure></p>
+      <div class="post-button"><a class="btn" href="/2021/03/31/Formal%20Languages%20vs.%20Regular%20Languages/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/03/26/CS143%20Lecture04%20Implementation%20of%20Lexical%20Analysis/">CS143 Lecture04 Implementation of Lexical Analysis，Note</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-03-26 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/cs143-notes/">cs143-notes</a></span>
+      <p><h1>CS143 Lecture04 Implementation of Lexical Analysis</h1>
+<p><strong>Implementation of regular expressions:</strong></p>
+<p>$$RegExp ⇒ NFA ⇒ DFA ⇒ Tables$$</p>
+<p><strong>Notation</strong></p>
+<ul>
+<li>Union: $$A|B\equiv A+B$$</li>
+<li>Option: $$A+\epsilon\equiv A? $$</li>
+<li>Range: $$‘a’+‘b’+…‘z’\equiv [a-z]$$</li>
+<li>Excluded range: $$complement\ of\ [a-z]\equiv [\hat{} a ]$$</li>
+</ul>
+<h2 id="Regular-Expressions-Lexical-Spec-1">Regular Expressions =&gt; Lexical Spec. (1)</h2>
+<ol>
+<li>
+<p>Write a regex for each token</p>
+</li>
+<li>
+<p>Construct R, matching all lexemes for all tokens<br>
+$$<br>
+R = Keyword + Identifier + Number + …\<br>
+= R1+ R2+ …<br>
+$$<br>
+(This step is done automatically by tools like <em>Flex</em>)</p>
+</li>
+<li>
+<p>Let input be $$x_1…x_n$$ (iterate chars in input)</p>
+<p>For $$i \le i \le n$$ check<br>
+$$<br>
+x_1…x_i \in L®<br>
+$$</p>
+</li>
+<li>
+<p>If success, then we know that</p>
+<p>$$x_1…x_i \in L(R_j)$$ for some $$j$$</p>
+</li>
+<li>
+<p>Remove $$x_1…x_i$$ from input and goto (3)</p>
+</li>
+</ol>
+<h3 id="Ambiguities-1">Ambiguities (1)</h3>
+<p>当<br>
+$$<br>
+x_1…x_i\in L®\<br>
+x_i…x_k\in L®<br>
+$$<br>
+上述两式同时成立时，换句话说，也就是多个起点相同，长度不同的子串同时满足语言$$L®$$时，</p>
+<p>**Rule: ** Pick longest possible string in $$L®$$</p>
+<p>也就是说取满足$$L®$$的最长子串。</p>
+<h3 id="Ambiguities-2">Ambiguities (2)</h3>
+<p>当相同子串满足多个正则语言定义时，即<br>
+$$<br>
+x_1…X_i\in L(R_j)\<br>
+x_i…x_i\in L(R_k)<br>
+$$<br>
+这种给个优先级就好惹。</p>
+<h3 id="Error-Handling">Error Handling</h3>
+<p>考虑如果一段输入的前缀无法被任何规则匹配的情况，我们会一直匹配直到输入终结处（EOF）。我们可以尝试编写一个匹配所有<em>坏字符串</em>的规则，并将其优先级设为最低。</p>
+<h3 id="Summary">Summary</h3>
+<p>Regular expressions provide a concise notation for string patterns.</p>
+<p>Use in lexical analysis requires small extensions</p>
+<ul>
+<li>To resolve ambiguities</li>
+<li>To handle errors</li>
+</ul>
+<p>Good algorithms known</p>
+<ul>
+<li>Require only single pass over the input</li>
+<li>Few operations per character (table lookup)</li>
+</ul>
+<h2 id="Finite-Automata">Finite Automata</h2>
+<p><strong>A finite automaton consists of</strong></p>
+<ul>
+<li>An input alphabet $$\sum$$</li>
+<li>A set of states $$S$$</li>
+<li>A start state $$n$$</li>
+<li>A set of accepting states $$F \subseteq S$$</li>
+<li>A set of transitions $$state \rightarrow^{input} state$$</li>
+</ul>
+<h3 id="Transitions">Transitions</h3>
+<p>中文也就是状态转换。可以记作<br>
+$$<br>
+s_1 \rightarrow^{a} s_2<br>
+$$<br>
+可以读作<em>输入$$a$$使状态$$s_1$$转移到状态$$s_2$$</em>。</p>
+<p>如果在输入结束时不处于接受状态(accept)，则拒绝(reject)该输入。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326184435.png" alt="有穷状态机状态图示"></p>
+<h3 id="Epsilon-Moves">Epsilon Moves</h3>
+<p>This is a way to change a state to another without any input. 不过我真没找到这玩意的中文翻译，所以以下叫做<em>ε-moves</em>（大草</p>
+<p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326185231.png" alt="ε-moves"></p>
+<p>Only exist in NFAs.</p>
+<h3 id="Deterministic-and-Nondeterministic-Automata">Deterministic and Nondeterministic Automata</h3>
+<ul>
+<li>
+<p>Deterministic Finite Automaton</p>
+<p>每个输入都有确定的一个状态转移。</p>
+<p>没有<em>ε-moves</em>。</p>
+</li>
+<li>
+<p>Nondeterministic Finite Automata</p>
+<p>对于每个输入，状态转移的个数不确定。可以是零、一或多个状态转移。</p>
+<p>可以含有<em>ε-moves</em>。</p>
+</li>
+</ul>
+<p>所以，对于DFA来说，整个状态转移路径可以使用一个给定的输入确定。NFA则可以选择多种状态转移路径或是进行<em>ε-moves</em>。</p>
+<p>因此我们规定：一个$$NFA$$如果可以达到一个<em>最终状态</em>，那么它是接受的（accept）。</p>
+<h3 id="NFA-vs-DFA">$$NFA$$ vs. $$DFA$$</h3>
+<ul>
+<li>$$DFA$$通常比$$NFA$$快</li>
+<li>$$DFA$$通常比$$NFA$$复杂（甚至可以达到指数级的）</li>
+</ul>
+<p>对于$$NFA$$，它的状态数是可能状态数$$N$$的非空子集。也就是说，有$$2^N-1$$个可能状态数。</p>
+<h3 id="Convert-Regular-Expression-to-Finite-Automata">Convert Regular Expression to Finite Automata</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326191908.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326192218.png" alt=""></p>
+<p><img src="https://cdn.jsdelivr.net/gh/DarcJC/pictures-host/imgs/20210326192236.png" alt=""></p>
+<p><strong>技巧</strong></p>
+<p>我们可以对$$NFA$$进行模拟。且目标$$DFA$$的每个状态都是一个$$NFA$$状态的非空子集。</p>
+<p>目标$$DFA$$起始状态是一组从$$NFA$$的起始状态可以通过<em>ε-moves</em>转移到的状态。</p>
+<p>而对于其它转换规则，我们遵从——如果状态$$S^<code>$$在遇到输入$$a$$时，可以从原状态$$S$$达到（包括*ε-moves*），那么我们将$$S \rightarrow^&#123;a&#125; S^</code>$$放进$$DFA$$的转换规则列表中。</p>
+<h3 id="实现">实现</h3>
+<p>$$DFA$$可以通过一个二维数组$$T$$实现，我们将$$S_i\rightarrow^{a}S_k$$映射为$$T[i,a]=k$$。所以，$$T$$的一个维度代表状态，而另一个维度代表输入，其值代表目标状态。</p>
+<p><strong>执行</strong>$$DFA$$</p>
+<p>如果当前状态为$$S_k$$，在读取输入$$a$$后，查表转移到状态$$S_i=T[k,a]$$。</p>
+<p><strong>结论</strong></p>
+<p>将$$NFA$$转换到$$DFA$$是很多像$$Flex$$这种工具的核心。但是因为$$DFA$$可能会有着极其巨大的状态数，所以，实践中通常会牺牲时间来换取空间。</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2021/03/26/CS143%20Lecture04%20Implementation%20of%20Lexical%20Analysis/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/03/25/CS143%20Lecture03%20Lexical%20Analysis/">CS143 Lecture03 Lexical Analysis，Note</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-03-25 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/cs143-notes/">cs143-notes</a></span>
+      <p><h1>CS143 Lecture03: Lexical Analysis</h1>
+<p><em>词法分析</em>。</p>
+<p><strong>Goal</strong>: Partition input string into substring called <em>tokens</em></p>
+<p>Lexical analysis produces a stream of tokens, which is input to the parser.</p>
+<p>这是编译的第1/4步，词法分析产生词元序列并作为下一阶段(parse，翻译)的输入。</p>
+<h2 id="Token">Token</h2>
+<p><em>词元</em>。</p>
+<p>A syntactic category，也就是对句法的分类</p>
+<blockquote>
+<p>In English:</p>
+<ul>
+<li>noun, verb, adjective, …</li>
+</ul>
+<p>In a programming language:</p>
+<ul>
+<li>Identifier, Integer, Keyword, Whitespace, …</li>
+</ul>
+</blockquote>
+<p>A token class corresponds to a set of strings.</p>
+<p>Examples</p>
+<ul>
+<li>Identifier: strings of letters or digits, starting with a letter</li>
+<li>Integer: a non-empty string of digits</li>
+<li>Keyword: “else” or  “if” or  “begin” or …</li>
+<li>Whitespace: a non-empty sequence of blanks,  newlines, and tabs</li>
+</ul>
+<h2 id="Design">Design</h2>
+<p>噢对，这有个缩写<em>N.B.</em>，原版是<em>Nota Bene</em>（拉丁语），也就是划重点的意思。另外<em>lexeme</em>中文翻译为<em>词素</em>。</p>
+<ul>
+<li>Define a finite set of tokens.</li>
+<li>Describe which strings belong to each token.</li>
+</ul>
+<p>但是我们应该考虑到歧义。如下例子：</p>
+<p><code>i</code>/<code>if</code>；<code>=</code>/<code>==</code>；<code>Foo&lt;Bar&gt;</code>/<code>cin &gt;&gt; var;</code>/<code>Foo&lt;Bar&lt;Bazz&gt;&gt;</code>；</p>
+<p>而要消除歧义显然就没办法在线处理了——我们需要“Lookahead”。</p>
+<p>现在我们需要的，是描述词元的词素并找到一种消除歧义的方法。</p>
+<h2 id="Regular-Languages">Regular Languages</h2>
+<p>中文叫做<em>正则语言</em>或是<em>正规语言</em>。正则语言是描述词元的最常用的形式。</p>
+<p><strong>Language Def. :</strong>  Let S be a set of characters. <em>A language over S</em> is a set of strings of characters drawn  from S.</p>
+<p>定义指出，字符串S上的<em>语言</em>就是一组S上的<em>子串</em>。$$L(x)$$表示“<em>x的语言</em>”。</p>
+<p>所以，</p>
+<hr>
+<ul>
+<li>语言是一组字符串。</li>
+<li>需要一些记号来指定词法分析器所需的字符串组。</li>
+<li>正则语言使用的标准记号叫做正则表达式。</li>
+</ul>
+<h3 id="Atomic-Regular-Expression">Atomic Regular Expression</h3>
+<ul>
+<li>
+<p>Single character</p>
+<p>$$‘c’={“c”}$$</p>
+</li>
+<li>
+<p>Epsilon</p>
+<p>$$\epsilon = {“”}$$</p>
+</li>
+</ul>
+<h3 id="Compound-Regular-Expression">Compound Regular Expression</h3>
+<ul>
+<li>
+<p>Union 并</p>
+<p>$$A+B={s|s \in A \ \ or\ \  s\in B}$$</p>
+<p>也就是对$$A$$和$$B$$所表示的语言取并集。</p>
+</li>
+<li>
+<p>Concatenation 串接</p>
+<p>$$AB={ab|a\in A\ \  and\ \  b \in B}$$</p>
+</li>
+<li>
+<p>Iteration 克林闭包</p>
+<p>$$A^*=\cup_{i\ge 0}A^i$$ where $$A^i=A…i \ \ times\ \ …A$$</p>
+<p>表示$$A$$中的字符串没有出现或是多次出现。</p>
+<p>注意以上运算的优先级是$$闭包(最高)-串接-并(最低)$$。</p>
+</li>
+</ul>
+<p><strong>Regular Expression Def. :</strong> The <em>regular expressions</em> over S are the smallest set of expressions including</p>
+<ul>
+<li>$$\epsilon$$</li>
+<li>$$‘c’$$ where $$c\in \sum$$</li>
+<li>$$A+B$$ where $$A,B$$ are regex over $$\sum$$</li>
+<li>$$AB$$</li>
+<li>$$A^*$$ where $$A$$ is regex over $$\sum$$</li>
+</ul>
+<h3 id="Syntax-vs-Semantics">Syntax vs. Semantics</h3>
+<blockquote>
+<p>To be careful, we should distinguish syntax and semantics.</p>
+</blockquote>
+<p>$$L(\epsilon) = {“”}$$</p>
+<p>$$L(‘c’)={“c”}$$</p>
+<p>$$L(A+B)=L(A)\cup L(B)$$</p>
+<p>$$L(AB)={ab|a\in L(A)\ \ and\ \ b \in L(B)}$$</p>
+<p>$$L(A^*)=\cup_{i\ge 0}L(A^i)$$</p>
+<h3 id="Example">Example</h3>
+<p><strong>Keyword</strong></p>
+<p>Keyword: “else” or “if” or “begin” or …</p>
+<p>$$‘else’+‘if’+‘begin’+…$$</p>
+<p>Note: $$‘else’$$ abbreviates $$‘e’\ ‘l’\ ‘s’\ ‘e’$$</p>
+<p><strong>Integer</strong></p>
+<p>In order to describe integers, here is an abbreviation:</p>
+<p>$$A^+=AA^<em>$$<br>
+$$<br>
+⇒ digit=‘0’+‘1’+‘2’+‘3’+‘4’+‘5’+‘6’+‘7’+‘8’+‘9’\<br>
+⇒ integer=digit^+<br>
+$$<br>
+<strong>Identifier</strong><br>
+$$<br>
+letter=‘A’+…+‘Z’+‘a’+…+‘z’\<br>
+identifier=letter(letter+digit)^</em><br>
+$$<br>
+<strong>Whitespace</strong><br>
+$$<br>
+(‘\ ‘+’\backslash n’ + ‘\backslash t’)<br>
+$$</p>
+<h2 id="Summary">Summary</h2>
+<ul>
+<li>Regular languages are a language specification
+<ul>
+<li>We still need an implementation</li>
+</ul>
+</li>
+<li>Given a string s and a rexp R, is
+<ul>
+<li>$$s \in L®$$ ?</li>
+</ul>
+</li>
+</ul>
+</p>
+      <div class="post-button"><a class="btn" href="/2021/03/25/CS143%20Lecture03%20Lexical%20Analysis/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/03/23/CS143%20Lecture01%20Overview%EF%BC%8CNote/">CS143 Lecture01 Overview，Note</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-03-23 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/cs143-notes/">cs143-notes</a></span>
+      <p><h1>CS143 Leture01: Overview，Note</h1>
+<p><strong>The structure of a compiler</strong></p>
+<ol>
+<li>Lexical Analysis(词法分析)</li>
+<li>Parsing(预处理)</li>
+<li>Semantic Analysis(文法分析)</li>
+<li>Optimization(优化)</li>
+<li>Code Generation(代码生成)</li>
+</ol>
+<h2 id="Lexical-Analysis">Lexical Analysis</h2>
+<ul>
+<li>
+<p>Recognize words.</p>
+<p>word is the smallest unit above letters.</p>
+</li>
+<li>
+<p><em>Lexical Analysis</em> divide a string into “words” or “token”</p>
+</li>
+</ul>
+<h2 id="Parsing">Parsing</h2>
+<p>Parsing = Diagramming Sentences</p>
+<h2 id="Semantic-Analysis">Semantic Analysis</h2>
+<p><strong>To understand the meaning of sentence</strong>, but <em>meaning</em> is too hard to a program.</p>
+<p>Compilers perform limited semantic analysis to catch inconsistencies.</p>
+<h2 id="Optimization">Optimization</h2>
+<p>CS243: Program Analysis and Optimization</p>
+<h2 id="Code-Generation">Code Generation</h2>
+<p>A translation to another language, and typically produce assembly code.</p>
+<p><strong>Intermediate Representations（中间形式，a.k.a. IR）</strong></p>
+<p>Many compilers will perform translations between successive intermediate languages（很多编译器翻译时会使用多个中间形式.）</p>
+<ul>
+<li>All but first and last are intermediate representations (IR) internal（内部的） to the compiler.</li>
+</ul>
+<p>IRs are useful to hide the lower levels feature from higher levels.</p>
+<ul>
+<li>registers</li>
+<li>memory layout</li>
+<li>raw pointers</li>
+<li>…</li>
+</ul>
+</p>
+      <div class="post-button"><a class="btn" href="/2021/03/23/CS143%20Lecture01%20Overview%EF%BC%8CNote/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/03/23/CS143%20Lecture02%20Language%20Design%20and%20Instruction%20of%20Cool/">CS143 Lecture02 Language Design and Instruction of Cool，Note</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-03-23 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/cs143-notes/">cs143-notes</a></span>
+      <p><h1>CS 143 Lecture02: Language Design and Instruction of Cool</h1>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Why are there new languages?</li>
+<li>Good-language criteria</li>
+</ul>
+<p><strong>History of ideas:</strong></p>
+<ul>
+<li>Abstract(抽象)</li>
+<li>Types(类型)</li>
+<li>Reuse(复用)</li>
+</ul>
+<h2 id="History-of-Ideas">History of Ideas</h2>
+<ul>
+<li>
+<p>Abstract</p>
+<p>Abstraction = Ignorance of some details</p>
+<p>Abstract is necessary to build a complex system, and the key is <strong>information hiding</strong> - only expose the essential</p>
+<p>Modes:</p>
+<ul>
+<li>Via language</li>
+<li>Via function / subroutine (LISP?)</li>
+<li>Via module (ECMAScript)</li>
+<li>Via class or abstract data types (Rust)</li>
+</ul>
+</li>
+<li>
+<p>Types</p>
+<ul>
+<li>Originally, few(no) types</li>
+<li>But types helps on building abstractions / compile time check.</li>
+<li>Experiments with various forms of parameterization(a.k.a. generic types，也就是所谓“泛型”).</li>
+<li>Best developed in functional programming(a.k.a. FP).</li>
+</ul>
+</li>
+<li>
+<p>Reuse</p>
+<p>It’s many common patterns while programming, but they’re hard to reuse.</p>
+<p>Tow popular approaches:</p>
+<ul>
+<li>Type parameterization（泛型，<code>List&lt;int&gt;</code>、<code>List&lt;double&gt;</code>）</li>
+<li>Classes and inheritance</li>
+<li>（Where is Traits? 🤣</li>
+</ul>
+</li>
+</ul>
+</p>
+      <div class="post-button"><a class="btn" href="/2021/03/23/CS143%20Lecture02%20Language%20Design%20and%20Instruction%20of%20Cool/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2021/02/15/darc-qq-bot-changelog/">Darc Bot更新记录</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2021-02-15 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/misc-post/">misc-post</a></span>
+      <p><div class="note default">
+            <p>这只是一个更新记录 xD<br/><br>项目地址: <a target="_blank" rel="noopener" href="https://github.com/DarcJC/darc-qq-bot">https://github.com/DarcJC/darc-qq-bot</a></p>
+          </div>
+<h1>Changelogs</h1>
+<p>…</p>
+<h2 id="2021-2-15">2021/2/15</h2>
+<ul>
+<li>命运2信息查询</li>
+<li>数据库问题临时修复</li>
+</ul>
+<h2 id="2021-2-14">2021/2/14</h2>
+<ul>
+<li>彩六战绩查询</li>
+<li>切换到TypeScript</li>
+</ul>
+</p>
+      <div class="post-button"><a class="btn" href="/2021/02/15/darc-qq-bot-changelog/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2020/12/07/hello-world/">Halo, 哈喽</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2020-12-07 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/misc-post/">misc-post</a></span>
+      <p><p>欢迎来到Darc的小博客啦~</p></p>
+      <div class="post-button"><a class="btn" href="/2020/12/07/hello-world/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2020/12/07/misc-1/">尘尘杂记 | 风</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2020-12-07 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/misc-post/">misc-post</a></span>
+      <p><div class="note default">
+            <h3 id="摘">摘</h3><p>To dare is to lose one’s footing momentarily. To not dare is to lose oneself. </br>—Soren Kierkegaard</p>
+          </div>
+<p>唔。</p>
+<p>总是想，人，是不是就是在旦夕之间游走的蜉蝣啊。“朝而往，暮而归”，以此为乐。</p></p>
+      <div class="post-button"><a class="btn" href="/2020/12/07/misc-1/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+
+
+
+
+<footer>
+  <div>
+  Copyright &copy; 2021.<a href="/">Darc's Blog</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+  </div>
+</div>
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.png" alt="DarcJC"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DarcJC</p>
+          <span class="tagline">伴你生死与共 尽我情之所钟 赤水风动 愿你我白首以终</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-th-list fa-fw"></i>Categories</span>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cs143-notes/">cs143-notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/misc-post/">misc-post</a></li></ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/about/">关于</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+
+
+</body>
+</html>
